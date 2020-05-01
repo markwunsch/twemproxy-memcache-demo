@@ -7,7 +7,7 @@ services:
         ports:
             - 11211:11211
     twemproxy:
-        image: markwunsch/twemproxy-docker:latest
+        image: markwunsch/twemdoxy:latest
         environment:
             LISTEN_PORT: "22123"
             SERVERS: "memcached:11211:1"
