@@ -1,0 +1,24 @@
+version: '2.1'
+
+services:
+    memcached:
+        image: memcached:1.4-alpine
+        command: [memcached, -p, '11211', -U, '0', -R, '100']
+        ports:
+            - 11211:11211
+    twemproxy:
+        image: markwunsch/twemproxy-docker:latest
+        environment:
+            LISTEN_PORT: "22123"
+            SERVERS: "memcached:11211:1"
+            AUTO_EJECT_HOSTS: "true"
+            TIMEOUT: "100"
+            SERVER_RETRY_TIMEOUT: "3000"
+            SERVER_FAILURE_LIMIT: "3"
+            SERVER_CONNECTIONS: "2"
+            PRECONNECT: "false"
+            REDIS: "false"
+            HASH: "murmur"
+            DISTRIBUTION: "ketama" 
+        ports:
+            - 22123:22123
